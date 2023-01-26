@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Reto2eSgeG01.Models
+namespace Reto2eSgeG01.Core.Entities.DbViews
 {
-    public partial class Product
+    public partial class AlphabeticalListOfProduct
     {
-        public Product()
-        {
-            OrderDetails = new HashSet<OrderDetail>();
-        }
-
         public int ProductId { get; set; }
         public string ProductName { get; set; } = null!;
         public int? SupplierId { get; set; }
@@ -20,9 +15,6 @@ namespace Reto2eSgeG01.Models
         public short? UnitsOnOrder { get; set; }
         public short? ReorderLevel { get; set; }
         public bool Discontinued { get; set; }
-
-        public virtual Category? Category { get; set; }
-        public virtual Supplier? Supplier { get; set; }
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        public string CategoryName { get; set; } = null!;
     }
 }

@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Reto2eSgeG01.Models
+namespace Reto2eSgeG01.Core.Entities.DbViews
 {
-    public partial class OrderDetail
+    public partial class OrderDetailsExtended
     {
         public int OrderId { get; set; }
         public int ProductId { get; set; }
+        public string ProductName { get; set; } = null!;
         public decimal UnitPrice { get; set; }
         public short Quantity { get; set; }
         public float Discount { get; set; }
-
-        public virtual Order Order { get; set; } = null!;
-        public virtual Product Product { get; set; } = null!;
+        public decimal? ExtendedPrice { get; set; }
     }
 }

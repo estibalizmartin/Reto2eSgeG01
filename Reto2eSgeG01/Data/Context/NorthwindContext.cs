@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Reto2eSgeG01.Core.Entities;
+using Reto2eSgeG01.Core.Entities.DbViews;
 
-namespace Reto2eSgeG01.Models
+namespace Reto2eSgeG01.Data.Context
 {
     public partial class NorthwindContext : DbContext
     {

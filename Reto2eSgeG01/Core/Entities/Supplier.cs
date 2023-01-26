@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Reto2eSgeG01.Models
+namespace Reto2eSgeG01.Core.Entities
 {
     public partial class Supplier
     {

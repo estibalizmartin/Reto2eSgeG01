@@ -18,9 +18,7 @@
 
   <ItemGroup>
     <Folder Include="Controllers\" />
-    <Folder Include="Core\Entities\DbViews\" />
     <Folder Include="Core\Models\" />
-    <Folder Include="Data\Context\" />
   </ItemGroup>
 
 </Project>

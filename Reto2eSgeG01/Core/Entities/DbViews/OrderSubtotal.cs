@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Reto2eSgeG01.Models
+namespace Reto2eSgeG01.Core.Entities.DbViews
 {
-    public partial class SummaryOfSalesByQuarter
+    public partial class OrderSubtotal
     {
-        public DateTime? ShippedDate { get; set; }
         public int OrderId { get; set; }
         public decimal? Subtotal { get; set; }
     }
