@@ -13,6 +13,7 @@ namespace Reto2eSgeG01.Core.Entities
         }
 
         public int EmployeeId { get; set; }
+        public int Password { get; set; }
         public string LastName { get; set; } = null!;
         public string FirstName { get; set; } = null!;
         public string? Title { get; set; }

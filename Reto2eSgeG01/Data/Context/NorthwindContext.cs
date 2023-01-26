@@ -206,6 +206,8 @@ namespace Reto2eSgeG01.Data.Context
 
                 entity.Property(e => e.EmployeeId).HasColumnName("EmployeeID");
 
+                entity.Property(e => e.Password).HasColumnType("nvarchar(50)");
+
                 entity.Property(e => e.Address).HasMaxLength(60);
 
                 entity.Property(e => e.BirthDate).HasColumnType("datetime");
