@@ -2,7 +2,7 @@
 
 namespace Reto2eSgeG01.Core.Models
 {
-    public class CustomerViewModel
+    public class BusquedaPorpaisViewModel
     {
         public string CompanyName { get; set; } = null!;
         public string? ContactName { get; set; }
@@ -19,5 +19,4 @@ namespace Reto2eSgeG01.Core.Models
 
         public virtual ICollection<CustomerDemographic> CustomerTypes { get; set; }
     }
-
 }
