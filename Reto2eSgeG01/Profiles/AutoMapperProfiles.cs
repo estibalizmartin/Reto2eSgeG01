@@ -9,6 +9,8 @@ namespace Reto2eSgeG01.Profiles
         public AutoMapperProfiles() 
         { 
             CreateMap<Employee, EmployeeViewModel>();
+            CreateMap<Category, CategoryViewModel>();
+            CreateMap<Category, CategoryUpdateModel>();
         }
     }
 }
