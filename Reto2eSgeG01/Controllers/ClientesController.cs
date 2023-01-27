@@ -19,9 +19,21 @@ namespace Reto2eSgeG01.Controllers
             _northwindContext = northwindContext;
             _mapper = mapper;
         }
-        
 
-        [HttpGet("{country}")]
+
+        [HttpGet("Todos Los Paises")]
+        public async Task<IEnumerable<string>> GetAllCountries()
+        {
+            return await _northwindContext.Customers
+                .Select(c => c.Country)
+                .Distinct()
+                .OrderByDescending(c => c)
+                .ToListAsync();
+        }
+
+
+
+        [HttpGet("{Por Pais}")]
         public async Task<IEnumerable<CustomerViewModel>> GetByCountry(string country)
         {
             return await _northwindContext.Customers
@@ -44,7 +56,7 @@ namespace Reto2eSgeG01.Controllers
                 .ToListAsync();
         }
 
-        [HttpGet("bycountries")]
+        [HttpGet("Uno o mas Paises")]
         public async Task<IEnumerable<CustomerViewModel>> GetByCountries([FromQuery] string[] countries)
         {
             var query = _northwindContext.Customers.AsQueryable();
@@ -61,6 +73,9 @@ namespace Reto2eSgeG01.Controllers
                 .ProjectTo<CustomerViewModel>(_mapper.ConfigurationProvider)
                 .ToListAsync();
         }
+
+   
+
 
 
     }
