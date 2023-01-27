@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using Reto2eSgeG01.Core.Entities;
 using Reto2eSgeG01.Core.Models;
 using Reto2eSgeG01.Data.Context;
 
@@ -22,10 +23,10 @@ namespace Reto2eSgeG01.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<EmployeeViewModel>> GetEmployees()
+        public async Task<IEnumerable<Employee>> GetEmployees()
         {
             return await _northwindContext.Employees
-                .ProjectTo<EmployeeViewModel>(_mapper.ConfigurationProvider)
+                .ProjectTo<Employee>(_mapper.ConfigurationProvider)
                 .ToListAsync();
         }
     }
