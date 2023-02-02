@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
-using Reto2eSgeG01.Core.Models;
 using Reto2eSgeG01.Data.Context;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Reto2eSgeG01.Controllers
 {
@@ -21,12 +20,41 @@ namespace Reto2eSgeG01.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<EmployeeViewModel>> GetEmployees()
+        //[HttpGet]
+        //public async Task<IEnumerable<EmployeeViewModel>> GetEmployeeByFirstNameAndPassword(string firstName, int password)
+        //{
+        //    var result = await _northwindContext.Employees.FirstOrDefaultAsync(x => x.FirstName == firstName && x.Password.Equals(password));
+
+        //    return result;
+        //}
+
+        [HttpPost("encryptpassword")]
+        public async Task<ActionResult> EncryptPassword(int employeeId, string password)
         {
-            return await _northwindContext.Employees
-                .ProjectTo<EmployeeViewModel>(_mapper.ConfigurationProvider)
-                .ToListAsync();
+            var employee = await _northwindContext.Employees
+                .FirstOrDefaultAsync(e => e.EmployeeId == employeeId);
+
+            if (employee is null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                var encryptedPassword = Encoding.Default.GetString(CalculateSHA256(password));
+                employee.Password = encryptedPassword;
+                await _northwindContext.SaveChangesAsync();
+                return Ok();
+            }
+        }
+
+        private byte[] CalculateSHA256(string str)
+        {
+            SHA256 sha256 = SHA256Managed.Create();
+            byte[] hashValue;
+            UTF8Encoding objUtf8 = new UTF8Encoding();
+            hashValue = sha256.ComputeHash(objUtf8.GetBytes(str));
+
+            return hashValue;
         }
     }
 }
