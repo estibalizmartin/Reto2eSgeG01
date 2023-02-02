@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Reto2eSgeG01.Core.Entities;
+using Reto2eSgeG01.Core.Models;
 using Reto2eSgeG01.Data.Context;
 using System.Security.Cryptography;
 using System.Text;
@@ -55,6 +57,23 @@ namespace Reto2eSgeG01.Controllers
             hashValue = sha256.ComputeHash(objUtf8.GetBytes(str));
 
             return hashValue;
+        }
+
+        [HttpGet("Por fecha")]
+        public async Task<ActionResult<IEnumerable<EmployeeViewModel>>> GetByDate(DateTime date)
+        {
+            var employees = await _northwindContext.Employees
+                .Where(employee => employee.BirthDate > date)
+                .Select(employee => _mapper.Map<EmployeeViewModel>(employee))
+                .ToArrayAsync();
+
+            if (employees.Length == 0)
+            {
+                return NotFound();
+            }
+            
+            return Ok(employees);
+            
         }
     }
 }

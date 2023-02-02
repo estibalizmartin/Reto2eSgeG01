@@ -34,6 +34,7 @@ namespace Reto2eSgeG01.Controllers
         {
             var category = new Category()
             {
+
                 CategoryName = "Lounge",
                 Description = "A great hall, ideal for parties and reunions",
                 Picture = null,
