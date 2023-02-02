@@ -10,6 +10,8 @@ namespace Reto2eSgeG01.Profiles
         { 
             CreateMap<Employee, EmployeeViewModel>();
             CreateMap<Customer, CustomerViewModel>();
+            CreateMap<Category, CategoryViewModel>();
+            CreateMap<Category, CategoryUpdateModel>();
         }
     }
 }
