@@ -75,9 +75,22 @@ namespace Reto2eSgeG01.Controllers
                 .ProjectTo<CustomerViewModel>(_mapper.ConfigurationProvider)
                 .ToListAsync();
         }
-
-   
-
+        [HttpGet("paginacion")]
+        public async Task<ActionResult<IEnumerable<CustomerPaginationModel>>> GetCustomerPaginated(int page = 1, Paginacion paginacion = Paginacion.a)
+        {
+            
+                var result = await _northwindContext.Customers
+                    .Select(c => _mapper.Map<CustomerPaginationModel>(c))
+                    // el número de reigstros que me voy a saltar
+                    .Skip((int)paginacion * (page - 1))
+                    // el número de registros a recuperar
+                    .Take((int)paginacion)
+                    .ToListAsync();
+                return result;
+            
+                
+            
+        }
 
 
     }
