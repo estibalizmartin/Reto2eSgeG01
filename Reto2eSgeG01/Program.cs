@@ -12,7 +12,7 @@ builder.Services.AddControllers()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//Añadimos la cadena de conexión al contenedor de dependencias
+//AÃ±adimos la cadena de conexiÃ³n al contenedor de dependencias
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<NorthwindContext>(opciones =>
@@ -22,7 +22,6 @@ builder.Services.AddDbContext<NorthwindContext>(opciones =>
 });
 
 //builder.Services.AddDbContext<NorthwindContext>(opciones => opciones.UseSqlServer(connectionString));
-
 
 builder.Services.AddAutoMapper(typeof(Program));
 
