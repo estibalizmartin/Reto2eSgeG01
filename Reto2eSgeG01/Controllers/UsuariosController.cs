@@ -71,5 +71,22 @@ namespace Reto2eSgeG01.Controllers
 
             return hashValue;
         }
+
+        [HttpGet("Por fecha")]
+        public async Task<ActionResult<IEnumerable<EmployeeViewModel>>> GetByDate(DateTime date)
+        {
+            var employees = await _northwindContext.Employees
+                .Where(employee => employee.BirthDate > date)
+                .Select(employee => _mapper.Map<EmployeeViewModel>(employee))
+                .ToArrayAsync();
+
+            if (employees.Length == 0)
+            {
+                return NotFound();
+            }
+            
+            return Ok(employees);
+            
+        }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Logging.Console;
 using Reto2eSgeG01.Core.Entities;
 using Reto2eSgeG01.Core.Entities.DbViews;
 
@@ -52,6 +54,8 @@ namespace Reto2eSgeG01.Data.Context
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Server=INFHERBE18\\SQLEXPRESS01;Initial Catalog=Northwind; Integrated Security=True");
+                //optionsBuilder.ConfigureWarnings(
+                //warning => warning.Throw(RelationalEventId.QueryClientEvaluationWarning));
             }
         }
 
@@ -734,5 +738,21 @@ namespace Reto2eSgeG01.Data.Context
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+        private static readonly ILoggerFactory MyLoggerFactory = GetLoggerFactory();
+
+        private static ILoggerFactory GetLoggerFactory()
+        {
+            IServiceCollection serviceCollection = new ServiceCollection();
+            serviceCollection.AddLogging(builder =>
+                builder.AddConsole()
+                    .AddFilter((category, level) =>
+                        category == DbLoggerCategory.Query.Name && level == LogLevel.Warning
+                    )
+                );
+            return serviceCollection.BuildServiceProvider()
+                .GetService<ILoggerFactory>();
+        }
+
     }
 }
