@@ -13,9 +13,9 @@ namespace Reto2eSgeG01.Core.Entities
         }
 
         public int EmployeeId { get; set; }
-        public string Password { get; set; }
-        public string LastName { get; set; } = null!;
-        public string FirstName { get; set; } = null!;
+        public string? Password { get; set; }
+        public string? LastName { get; set; } = null!;
+        public string? FirstName { get; set; } = null!;
         public string? Title { get; set; }
         public string? TitleOfCourtesy { get; set; }
         public DateTime? BirthDate { get; set; }
