@@ -24,11 +24,13 @@ namespace Reto2eSgeG01.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost("Get employee by first name and password")]
-        public async Task<ActionResult<IEnumerable<EmployeeViewModel>>> GetEmployeeByFirstNameAndPassword(UserPostModel userPostModel)
+        [HttpPost("Get user by first name and password")]
+        public async Task<ActionResult<IEnumerable<EmployeeViewModel>>> GetEmployeeByFirstNameAndPassword(
+            UserPostRequest userPostRequest)
         {
             var entity = await _northwindContext.Employees
-                .Where(x => x.FirstName.Equals(userPostModel.FirstName) && x.Password.Equals(userPostModel.Password))
+                .Where(x => x.FirstName.Equals(userPostRequest.FirstName) 
+                        && x.Password.Equals(userPostRequest.Password))
                 .ProjectTo<EmployeeViewModel>(_mapper.ConfigurationProvider)
                 .ToListAsync();
 
@@ -43,11 +45,11 @@ namespace Reto2eSgeG01.Controllers
         }
 
         [HttpPut("Encrypt password")]
-        public async Task<ActionResult> EncryptPassword(int employeeId, string password)
+        public async Task<ActionResult> EncryptPassword(EncryptPasswordPostRequest encryptPasswordPostRequest)
         {
             var employee = await _northwindContext.Employees
                 .AsTracking()
-                .FirstOrDefaultAsync(e => e.EmployeeId == employeeId);
+                .FirstOrDefaultAsync(e => e.EmployeeId == encryptPasswordPostRequest.EmployeeId);
 
             if (employee is null)
             {
@@ -55,24 +57,14 @@ namespace Reto2eSgeG01.Controllers
             }
             else
             {
-                var encryptedPassword = Encoding.Default.GetString(CalculateSHA256(password));
+                var encryptedPassword = Encoding.Default.GetString(CalculateSHA256(encryptPasswordPostRequest.Password));
                 employee.Password = encryptedPassword;
                 await _northwindContext.SaveChangesAsync();
                 return Ok();
             }
         }
 
-        private byte[] CalculateSHA256(string str)
-        {
-            SHA256 sha256 = SHA256Managed.Create();
-            byte[] hashValue;
-            UTF8Encoding objUtf8 = new UTF8Encoding();
-            hashValue = sha256.ComputeHash(objUtf8.GetBytes(str));
-
-            return hashValue;
-        }
-
-        [HttpGet("Por fecha")]
+        [HttpGet("Get users by date of birth")]
         public async Task<ActionResult<IEnumerable<EmployeeViewModel>>> GetByDate(DateTime date)
         {
             var employees = await _northwindContext.Employees
@@ -86,7 +78,16 @@ namespace Reto2eSgeG01.Controllers
             }
             
             return Ok(employees);
-            
+        }
+
+        private byte[] CalculateSHA256(string str)
+        {
+            SHA256 sha256 = SHA256Managed.Create();
+            byte[] hashValue;
+            UTF8Encoding objUtf8 = new UTF8Encoding();
+            hashValue = sha256.ComputeHash(objUtf8.GetBytes(str));
+
+            return hashValue;
         }
     }
 }

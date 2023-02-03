@@ -753,7 +753,5 @@ namespace Reto2eSgeG01.Data.Context
             return serviceCollection.BuildServiceProvider()
                 .GetService<ILoggerFactory>();
         }
-
-
     }
 }

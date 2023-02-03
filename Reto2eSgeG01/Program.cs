@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Reto2eSgeG01.Data.Context;
 using System.Text.Json.Serialization;
 
