@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Reto2eSgeG01.Core.Models;
 using Reto2eSgeG01.Data.Context;
+using Reto2eSgeG01.Entities;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Reto2eSgeG01.Controllers
@@ -12,10 +14,10 @@ namespace Reto2eSgeG01.Controllers
     [ApiController]
     public class ClientesController : ControllerBase
     {
-        private readonly NorthwindContext _northwindContext;
+        private readonly Data.Context.NorthwindContext _northwindContext;
         private readonly IMapper _mapper;
 
-        public ClientesController(NorthwindContext northwindContext, IMapper mapper)
+        public ClientesController(Data.Context.NorthwindContext northwindContext, IMapper mapper)
         {
             _northwindContext = northwindContext;
             _mapper = mapper;
@@ -76,23 +78,24 @@ namespace Reto2eSgeG01.Controllers
                 .ToListAsync();
         }
         [HttpGet("paginacion")]
-        public async Task<ActionResult<IEnumerable<CustomerPaginationModel>>> GetCustomerPaginated(int page = 1, Paginacion paginacion = Paginacion.a)
+        public async Task<ActionResult<IEnumerable<CustomerPaginationModel>>> GetCustomerPaginated(int page = 1,
+            Paginacion paginacion = Paginacion.a,
+            OrdenPorTipo ordenPorTipo=OrdenPorTipo.ID,
+            OrdenAscDsc ordenAscDsc=OrdenAscDsc.ASCENDENTE)
         {
-            
                 var result = await _northwindContext.Customers
-                    .Select(c => _mapper.Map<CustomerPaginationModel>(c))
-                    // el número de reigstros que me voy a saltar
-                    .Skip((int)paginacion * (page - 1))
-                    // el número de registros a recuperar
-                    .Take((int)paginacion)
-                    .ToListAsync();
+                .OrderBy(c=>ordenPorTipo)
+                .Select(c => _mapper.Map<CustomerPaginationModel>(c))
+                // el número de reigstros que me voy a saltar
+                .Skip((int)paginacion * (page - 1))
+                // el número de registros a recuperar
+                .Take((int)paginacion)
+                .ToListAsync();
                 return result;
-            
-                
             
         }
 
-
+       
     }
 }
 
