@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Reto2eSgeG01.Core.Entities
+namespace Reto2eSgeG01.Entities
 {
     public partial class Employee
     {
@@ -13,9 +13,8 @@ namespace Reto2eSgeG01.Core.Entities
         }
 
         public int EmployeeId { get; set; }
-        public string? Password { get; set; }
-        public string? LastName { get; set; } = null!;
-        public string? FirstName { get; set; } = null!;
+        public string LastName { get; set; } = null!;
+        public string FirstName { get; set; } = null!;
         public string? Title { get; set; }
         public string? TitleOfCourtesy { get; set; }
         public DateTime? BirthDate { get; set; }
@@ -31,6 +30,7 @@ namespace Reto2eSgeG01.Core.Entities
         public string? Notes { get; set; }
         public int? ReportsTo { get; set; }
         public string? PhotoPath { get; set; }
+        public string? Password { get; set; }
 
         public virtual Employee? ReportsToNavigation { get; set; }
         public virtual ICollection<Employee> InverseReportsToNavigation { get; set; }
